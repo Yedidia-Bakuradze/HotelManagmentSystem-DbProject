@@ -33,7 +33,7 @@ CREATE TABLE Person (
     F_Name         VARCHAR2(20) NOT NULL,
     L_Name         VARCHAR2(20) NOT NULL,
     City           VARCHAR2(20) NOT NULL,
-    Address        VARCHAR2(20) NOT NULL,
+    Address        VARCHAR2(30) NOT NULL,
     Id             NUMBER(38) NOT NULL,
 CONSTRAINT pk_Person PRIMARY KEY (Id))
 /
