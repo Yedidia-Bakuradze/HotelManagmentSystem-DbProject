@@ -62,7 +62,7 @@ CONSTRAINT pk_Department PRIMARY KEY (departId))
 CREATE TABLE Employee (
     Id             NUMBER(38) NOT NULL,
     joinDate       TIMESTAMP NOT NULL,
-    salaryPerHour  NUMBER(10) NOT NULL,
+    salaryPerHour  NUMBER(10, 2) NOT NULL,
     empRole        VARCHAR2(20) NOT NULL,
     departId       NUMBER(38) NOT NULL,
 CONSTRAINT pk_Employee PRIMARY KEY (Id),
