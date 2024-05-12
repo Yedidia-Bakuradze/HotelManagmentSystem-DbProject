@@ -34,7 +34,7 @@ CREATE TABLE Person (
     L_Name         VARCHAR2(20) NOT NULL,
     City           VARCHAR2(30) NOT NULL,
     Address        VARCHAR2(30) NOT NULL,
-    Id             NUMBER(38) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
 CONSTRAINT pk_Person PRIMARY KEY (Id))
 /
 
@@ -45,7 +45,7 @@ CONSTRAINT pk_Person PRIMARY KEY (Id))
 -- departName      :  
 --
 CREATE TABLE Department (
-    departId       NUMBER(38) NOT NULL,
+    departId       NUMBER(3) NOT NULL,
     departName     VARCHAR2(20) NOT NULL UNIQUE,
 CONSTRAINT pk_Department PRIMARY KEY (departId))
 /
@@ -60,7 +60,7 @@ CONSTRAINT pk_Department PRIMARY KEY (departId))
 -- departId        :  (references Department.departId)
 --
 CREATE TABLE Employee (
-    Id             NUMBER(38) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
     joinDate       TIMESTAMP NOT NULL,
     salaryPerHour  NUMBER(10, 2) NOT NULL,
     empRole        VARCHAR2(20) NOT NULL,
@@ -80,7 +80,7 @@ CONSTRAINT fk_Employee FOREIGN KEY (departId)
 -- start_time      :  (references WorkShift.start_time)
 --
 CREATE TABLE Set_on (
-    Id             NUMBER(38) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
     start_time     TIMESTAMP NOT NULL,
 CONSTRAINT pk_Set_on PRIMARY KEY (Id,start_time),
 CONSTRAINT fk_Set_on FOREIGN KEY (Id)
@@ -96,7 +96,7 @@ CONSTRAINT fk_Set_on2 FOREIGN KEY (start_time)
 -- Id              :  (references Employee.Id)
 --
 CREATE TABLE Recruter (
-    Id             NUMBER(38) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
 CONSTRAINT pk_Recruter PRIMARY KEY (Id),
 CONSTRAINT fk_Recruter FOREIGN KEY (Id)
     REFERENCES Employee (Id))
@@ -109,8 +109,8 @@ CONSTRAINT fk_Recruter FOREIGN KEY (Id)
 -- departId        :  (references Department.departId)
 --
 CREATE TABLE Manager (
-    Id             NUMBER(38) NOT NULL,
-    departId       NUMBER(38) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
+    departId       NUMBER(3) NOT NULL,
 CONSTRAINT pk_Manager PRIMARY KEY (Id),
 CONSTRAINT fk_Manager2 FOREIGN KEY (Id)
     REFERENCES Employee (Id),
@@ -126,13 +126,13 @@ CONSTRAINT fk_Manager FOREIGN KEY (departId)
 -- departId        :  (references Department.departId)
 --
 CREATE TABLE FutureEmployee (
-    Id1            NUMBER(38) NOT NULL,
-    Id             NUMBER(38) NOT NULL,
-    departId       NUMBER(38) NOT NULL,
-CONSTRAINT pk_FutureEmployee PRIMARY KEY (Id1),
-CONSTRAINT fk_FutureEmployee3 FOREIGN KEY (Id1)
+    fEmpId            NUMBER(9) NOT NULL,
+    recId             NUMBER(9),
+    departId       NUMBER(3) NOT NULL,
+CONSTRAINT pk_FutureEmployee PRIMARY KEY (fEmpId,departId),
+CONSTRAINT fk_FutureEmployee3 FOREIGN KEY (fEmpId)
     REFERENCES Person (Id),
-CONSTRAINT fk_FutureEmployee FOREIGN KEY (Id)
+CONSTRAINT fk_FutureEmployee FOREIGN KEY (recId)
     REFERENCES Recruter (Id)
     ON DELETE CASCADE,
 CONSTRAINT fk_FutureEmployee2 FOREIGN KEY (departId)
@@ -141,9 +141,6 @@ CONSTRAINT fk_FutureEmployee2 FOREIGN KEY (departId)
 /
 
 
---
--- Permissions for: 'public'
---
 GRANT ALL ON WorkShift TO public
 /
 GRANT ALL ON Person TO public
