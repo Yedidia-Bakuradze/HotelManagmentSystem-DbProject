@@ -18,7 +18,7 @@ CONSTRAINT pk_Person PRIMARY KEY (Id))
 
 CREATE TABLE Deparment (
     departId       NUMBER(3) NOT NULL,
-    departName     VARCHAR2(30) NOT NULL,
+    departTitle     VARCHAR2(30) NOT NULL,
 CONSTRAINT pk_Deparment PRIMARY KEY (departId))
 /
 
