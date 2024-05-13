@@ -1,6 +1,7 @@
 CREATE TABLE WorkShift (
     start_time     TIMESTAMP NOT NULL,
     end_time       TIMESTAMP NOT NULL,
+    CHECK (start_time < end_time),
 CONSTRAINT pk_WorkShift PRIMARY KEY (start_time))
 /
 
@@ -35,7 +36,7 @@ CREATE TABLE Employee (
     Id             NUMBER(9) NOT NULL,
     joinDate       DATE NOT NULL,
     salaryPerHour  NUMBER(3,2) NOT NULL,
-    empRole        VARCHAR2 NOT NULL,
+    empRole        VARCHAR2(30) NOT NULL,
     profId         NUMBER(3) NOT NULL,
     departId       NUMBER(3) NOT NULL,
 CONSTRAINT pk_Employee PRIMARY KEY (Id),
@@ -119,5 +120,4 @@ GRANT ALL ON FutureEmployee TO public
 GRANT ALL ON Willing_To_Work_At TO public
 /
 
-exit;
 
