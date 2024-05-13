@@ -78,7 +78,6 @@ CONSTRAINT fk_Manager FOREIGN KEY (managedDepartId)
 CREATE TABLE FutureEmployee (
     fEmpId         NUMBER(9) NOT NULL,
     recId          NUMBER(9) NOT NULL,
-    dateOfPositionPlacement DATE NOT NULL,
 CONSTRAINT pk_FutureEmployee PRIMARY KEY (fEmpId),
 CONSTRAINT fk_FutureEmployee2 FOREIGN KEY (fEmpId)
     REFERENCES Person (Id),
@@ -91,6 +90,7 @@ CREATE TABLE Willing_To_Work_At (
     Id             NUMBER(9) NOT NULL,
     profId         NUMBER(3) NOT NULL,
     departId       NUMBER(3) NOT NULL,
+    dateOfPositionPlacement DATE NOT NULL,
 CONSTRAINT pk_Willing_To_Work_At PRIMARY KEY (Id,profId,departId),
 CONSTRAINT fk_Willing_To_Work_At FOREIGN KEY (Id)
     REFERENCES FutureEmployee (fEmpId)
