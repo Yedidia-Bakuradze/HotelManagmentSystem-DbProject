@@ -1,9 +1,0 @@
-insert into Manager (id, departId) values (484249408, 151);
-insert into Manager (id, departId) values (601940022, 152);
-insert into Manager (id, departId) values (120190023, 153);
-insert into Manager (id, departId) values (733694942, 154);
-insert into Manager (id, departId) values (317396908, 155);
-insert into Manager (id, departId) values (403185332, 156);
-insert into Manager (id, departId) values (816356851, 151);
-insert into Manager (id, departId) values (510264567, 152);
-insert into Manager (id, departId) values (847311623, 153);

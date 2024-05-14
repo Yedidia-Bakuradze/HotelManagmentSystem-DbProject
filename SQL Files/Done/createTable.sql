@@ -16,27 +16,26 @@ CREATE TABLE Person (
 CONSTRAINT pk_Person PRIMARY KEY (Id))
 /
 
-CREATE TABLE Deparment (
+CREATE TABLE Department (
     departId       NUMBER(3) NOT NULL,
     departTitle     VARCHAR2(30) NOT NULL,
-CONSTRAINT pk_Deparment PRIMARY KEY (departId))
+CONSTRAINT pk_Department PRIMARY KEY (departId))
 /
 
 CREATE TABLE Profession (
-    profId         NUMBER(3) NOT NULL,
+    profId         NUMBER(9) NOT NULL,
     departId       NUMBER(3) NOT NULL,
     profTitle      VARCHAR2(30) NOT NULL,
 CONSTRAINT pk_Profession PRIMARY KEY (profId,departId),
 CONSTRAINT fk_Profession FOREIGN KEY (departId)
-    REFERENCES Deparment (departId)
+    REFERENCES Department (departId)
     ON DELETE CASCADE)
 /
 
 CREATE TABLE Employee (
     Id             NUMBER(9) NOT NULL,
     joinDate       DATE NOT NULL,
-    salaryPerHour  NUMBER(3,2) NOT NULL,
-    empRole        VARCHAR2(30) NOT NULL,
+    salaryPerHour  NUMBER(5,2) NOT NULL,
     profId         NUMBER(3) NOT NULL,
     departId       NUMBER(3) NOT NULL,
 CONSTRAINT pk_Employee PRIMARY KEY (Id),
@@ -72,38 +71,41 @@ CONSTRAINT pk_Manager PRIMARY KEY (Id),
 CONSTRAINT fk_Manager2 FOREIGN KEY (Id)
     REFERENCES Employee (Id),
 CONSTRAINT fk_Manager FOREIGN KEY (managedDepartId)
-    REFERENCES Deparment (departId))
+    REFERENCES Department (departId))
 /
 
 CREATE TABLE FutureEmployee (
     fEmpId         NUMBER(9) NOT NULL,
-    recId          NUMBER(9) NOT NULL,
 CONSTRAINT pk_FutureEmployee PRIMARY KEY (fEmpId),
 CONSTRAINT fk_FutureEmployee2 FOREIGN KEY (fEmpId)
-    REFERENCES Person (Id),
-CONSTRAINT fk_FutureEmployee FOREIGN KEY (recId)
-    REFERENCES Recruter (Id)
-    ON DELETE CASCADE)
+    REFERENCES Person (Id))
 /
 
 CREATE TABLE Willing_To_Work_At (
     Id             NUMBER(9) NOT NULL,
-    profId         NUMBER(3) NOT NULL,
+    profId         NUMBER(9) NOT NULL,
     departId       NUMBER(3) NOT NULL,
+    recId          NUMBER(9),
     dateOfPositionPlacement DATE NOT NULL,
 CONSTRAINT pk_Willing_To_Work_At PRIMARY KEY (Id,profId,departId),
+
 CONSTRAINT fk_Willing_To_Work_At FOREIGN KEY (Id)
     REFERENCES FutureEmployee (fEmpId)
     ON DELETE CASCADE,
+
 CONSTRAINT fk_Willing_To_Work_At2 FOREIGN KEY (profId,departId)
-    REFERENCES Profession (profId,departId))
+    REFERENCES Profession (profId,departId),
+
+CONSTRAINT fk_FutureEmployee FOREIGN KEY (recId)
+    REFERENCES Recruter (Id)
+    ON DELETE CASCADE)
 /
 
 GRANT ALL ON WorkShift TO public
 /
 GRANT ALL ON Person TO public
 /
-GRANT ALL ON Deparment TO public
+GRANT ALL ON Department TO public
 /
 GRANT ALL ON Profession TO public
 /

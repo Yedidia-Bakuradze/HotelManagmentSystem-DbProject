@@ -1,19 +1,20 @@
 from datetime import datetime, timedelta
 import random
 
-# Define the start and end dates
 start_date = datetime(1974, 1, 1)
 end_date = datetime(2004, 12, 31)
 
-# Generate 1000 different dates
 dates = set()
-while len(dates) < 1000:
+while len(dates) < 2500:
     random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
     dates.add(random_date)
 
-# Convert the set of dates to a list
 dates_list = list(dates)
 
-# Print the generated dates
-for date in dates_list:
-    print(date.strftime('%Y-%m-%d'))
+output_file = 'PDF and CVS\generatedRandomBirthdayDates.txt'
+with open(output_file, 'w') as f:
+    f.write('[RANDOM]\n')
+    for date in dates_list:
+        formatted_date = date.strftime('%Y-%m-%d')
+        f.write(f"TO_DATE('{formatted_date}'),\n")
+
