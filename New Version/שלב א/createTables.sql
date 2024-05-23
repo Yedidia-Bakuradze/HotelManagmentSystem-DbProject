@@ -1,8 +1,9 @@
 CREATE TABLE Shift (
     StartTime      TIMESTAMP NOT NULL,
     EndTime        TIMESTAMP NOT NULL,
-    Location       VARCHAR2(35) NOT NULL,
-CONSTRAINT pk_Shift PRIMARY KEY (StartTime,Location))
+    SpecialShift   VARCHAR2(35),
+CONSTRAINT pk_Shift PRIMARY KEY (StartTime),
+CONSTRAINT check_time CHECK (StartTime < EndTime))
 /
 
 
@@ -13,7 +14,7 @@ CONSTRAINT pk_Department PRIMARY KEY (DepartId))
 /
 
 CREATE TABLE Position (
-    PosId          NUMBER(5) NOT NULL,
+    PosId          NUMBER(9) NOT NULL,
     DepartId       NUMBER(5) NOT NULL,
     Salary         DECIMAL(5, 2) NOT NULL,
     Role           VARCHAR2(30) NOT NULL,
@@ -25,16 +26,16 @@ CONSTRAINT fk_Position FOREIGN KEY (DepartId)
 
 
 CREATE TABLE Employee (
-    Id             NUMBER(5) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
     City           VARCHAR2(35) NOT NULL,
     Address        VARCHAR2(35) NOT NULL,
     Phone          VARCHAR2(35) NOT NULL,
-    Email          VARCHAR2(35) NOT NULL,
+    Email          VARCHAR2(45) NOT NULL,
     FirstName      VARCHAR2(35) NOT NULL,
     LastName       VARCHAR2(35) NOT NULL,
     Gender         VARCHAR2(35) NOT NULL,
     JoinDate       DATE NOT NULL,
-    PosId          NUMBER(5) NOT NULL,
+    PosId          NUMBER(9) NOT NULL,
     DepartId       NUMBER(5) NOT NULL,
 CONSTRAINT pk_Employee PRIMARY KEY (Id),
 CONSTRAINT fk_Employee FOREIGN KEY (PosId,DepartId)
@@ -43,23 +44,19 @@ CONSTRAINT fk_Employee FOREIGN KEY (PosId,DepartId)
 /
 
 CREATE TABLE Manager (
-    Id             NUMBER(5) NOT NULL,
+    Id             NUMBER(9) NOT NULL,
     AccessType     VARCHAR2(1) NOT NULL,
-    DepartId       NUMBER(5) NOT NULL,
 CONSTRAINT pk_Manager PRIMARY KEY (Id),
 CONSTRAINT fk_Manager2 FOREIGN KEY (Id)
-    REFERENCES Employee (Id),
-CONSTRAINT fk_Manager FOREIGN KEY (DepartId)
-    REFERENCES Department (DepartId)
-    ON DELETE CASCADE)
+    REFERENCES Employee (Id))
 /
 
 CREATE TABLE Training (
     EntreyLevel    VARCHAR2(35) NOT NULL,
-    TrainingId     NUMBER(5) NOT NULL,
+    TrainingId     NUMBER(9) NOT NULL,
     TrainingName   VARCHAR2(35) NOT NULL,
-    TrainerId      NUMBER(5),
-    TrainedId      NUMBER(5),
+    TrainerId      NUMBER(9),
+    TrainedId      NUMBER(9),
 CONSTRAINT pk_Tranning PRIMARY KEY (TrainingId),
 CONSTRAINT fk_Tranning FOREIGN KEY (TrainerId)
     REFERENCES Employee (Id),
@@ -73,22 +70,22 @@ CREATE TABLE LeaveRequest (
     LeaveType      VARCHAR2(35) NOT NULL,
     RequestId      NUMBER(5) NOT NULL,
     Status         VARCHAR2(35) NOT NULL,
-    EmpId          NUMBER(5),
+    EmpId          NUMBER(9),
 CONSTRAINT pk_LeaveRequest PRIMARY KEY (RequestId),
 CONSTRAINT fk_LeaveRequest FOREIGN KEY (EmpId)
-    REFERENCES Employee (Id))
+    REFERENCES Employee (Id),
+CONSTRAINT check_dates CHECK (StartDate < EndDate)) 
 /
 
 CREATE TABLE EmployeeShift (
-    EmpId          NUMBER(5) NOT NULL,
+    EmpId          NUMBER(9) NOT NULL,
     StartTime      TIMESTAMP NOT NULL,
-    Location       VARCHAR2(35) NOT NULL,
-CONSTRAINT pk_EmployeeShift PRIMARY KEY (EmpId,StartTime,Location),
+CONSTRAINT pk_EmployeeShift PRIMARY KEY (EmpId,StartTime),
 CONSTRAINT fk_EmployeeShift FOREIGN KEY (EmpId)
     REFERENCES Employee (Id)
     ON DELETE CASCADE,
-CONSTRAINT fk_EmployeeShift2 FOREIGN KEY (StartTime,Location)
-    REFERENCES Shift (StartTime,Location))
+CONSTRAINT fk_EmployeeShift2 FOREIGN KEY (StartTime)
+    REFERENCES Shift (StartTime))
 /
 
 
