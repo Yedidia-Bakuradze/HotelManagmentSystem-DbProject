@@ -1,0 +1,10 @@
+DROP TABLE Willing_To_Work_At;
+DROP TABLE FutureEmployee;
+DROP TABLE Manager;
+DROP TABLE Recruter;
+DROP TABLE Set_On_Shift;
+DROP TABLE Employee;
+DROP TABLE Profession;
+DROP TABLE Department;
+DROP TABLE Person;
+DROP TABLE WorkShift;
