@@ -25,7 +25,7 @@ CONSTRAINT fk_Position FOREIGN KEY (DepartId)
 
 
 CREATE TABLE Employee (
-    Id             NCHAR(5) NOT NULL,
+    Id             NUMBER(5) NOT NULL,
     City           VARCHAR2(35) NOT NULL,
     Address        VARCHAR2(35) NOT NULL,
     Phone          VARCHAR2(35) NOT NULL,
@@ -43,7 +43,7 @@ CONSTRAINT fk_Employee FOREIGN KEY (PosId,DepartId)
 /
 
 CREATE TABLE Manager (
-    Id             NCHAR(5) NOT NULL,
+    Id             NUMBER(5) NOT NULL,
     AccessType     VARCHAR2(1) NOT NULL,
     DepartId       NUMBER(5) NOT NULL,
 CONSTRAINT pk_Manager PRIMARY KEY (Id),
@@ -54,16 +54,16 @@ CONSTRAINT fk_Manager FOREIGN KEY (DepartId)
     ON DELETE CASCADE)
 /
 
-CREATE TABLE Tranning (
+CREATE TABLE Training (
     EntreyLevel    VARCHAR2(35) NOT NULL,
-    TranningId     NUMBER(5) NOT NULL,
-    TranningName   VARCHAR2(35) NOT NULL,
-    Id             NCHAR(5),
-    Id1            NCHAR(5),
-CONSTRAINT pk_Tranning PRIMARY KEY (TranningId),
-CONSTRAINT fk_Tranning FOREIGN KEY (Id)
+    TrainingId     NUMBER(5) NOT NULL,
+    TrainingName   VARCHAR2(35) NOT NULL,
+    TrainerId      NUMBER(5),
+    TrainedId      NUMBER(5),
+CONSTRAINT pk_Tranning PRIMARY KEY (TrainingId),
+CONSTRAINT fk_Tranning FOREIGN KEY (TrainerId)
     REFERENCES Employee (Id),
-CONSTRAINT fk_Tranning2 FOREIGN KEY (Id1)
+CONSTRAINT fk_Tranning2 FOREIGN KEY (TrainedId)
     REFERENCES Employee (Id))
 /
 
@@ -73,18 +73,18 @@ CREATE TABLE LeaveRequest (
     LeaveType      VARCHAR2(35) NOT NULL,
     RequestId      NUMBER(5) NOT NULL,
     Status         VARCHAR2(35) NOT NULL,
-    Id             NCHAR(5),
+    EmpId          NUMBER(5),
 CONSTRAINT pk_LeaveRequest PRIMARY KEY (RequestId),
-CONSTRAINT fk_LeaveRequest FOREIGN KEY (Id)
+CONSTRAINT fk_LeaveRequest FOREIGN KEY (EmpId)
     REFERENCES Employee (Id))
 /
 
 CREATE TABLE EmployeeShift (
-    Id             NCHAR(5) NOT NULL,
+    EmpId          NUMBER(5) NOT NULL,
     StartTime      TIMESTAMP NOT NULL,
     Location       VARCHAR2(35) NOT NULL,
-CONSTRAINT pk_EmployeeShift PRIMARY KEY (Id,StartTime,Location),
-CONSTRAINT fk_EmployeeShift FOREIGN KEY (Id)
+CONSTRAINT pk_EmployeeShift PRIMARY KEY (EmpId,StartTime,Location),
+CONSTRAINT fk_EmployeeShift FOREIGN KEY (EmpId)
     REFERENCES Employee (Id)
     ON DELETE CASCADE,
 CONSTRAINT fk_EmployeeShift2 FOREIGN KEY (StartTime,Location)
@@ -102,7 +102,7 @@ GRANT ALL ON Employee TO public
 /
 GRANT ALL ON Manager TO public
 /
-GRANT ALL ON Tranning TO public
+GRANT ALL ON Training TO public
 /
 GRANT ALL ON LeaveRequest TO public
 /
