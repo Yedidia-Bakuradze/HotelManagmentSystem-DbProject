@@ -37,10 +37,10 @@ for i in range(2500):
     
 
     if(special==''):
-        sql_insert = f"INSERT INTO Shift (StartTime, EndTime, Location) VALUES (TO_TIMESTAMP('{start_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('{end_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), '{locations[random.randint(0,size-1)]}');"
+        sql_insert = f"INSERT INTO Shift (StartTime, EndTime) VALUES (TO_TIMESTAMP('{start_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('{end_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'));"
     else:
         special = f"\'{special}\'"
-        sql_insert = f"INSERT INTO Shift (StartTime, EndTime, Location, SpecialShift) VALUES (TO_TIMESTAMP('{start_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('{end_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), '{locations[random.randint(0,size-1)]}',{special});"
+        sql_insert = f"INSERT INTO Shift (StartTime, EndTime, SpecialShift) VALUES (TO_TIMESTAMP('{start_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('{end_time.strftime('%Y-%m-%d %H:%M:%S')}', 'YYYY-MM-DD HH24:MI:SS'),{special});"
     
     shiftOfDay +=1
     if (shiftOfDay > 3):

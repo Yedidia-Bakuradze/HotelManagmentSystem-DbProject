@@ -114,6 +114,6 @@ GRANT ALL ON LeaveRequest TO public
 /
 GRANT ALL ON EmployeeShift TO public
 /
-GRANT ALL ON EmployeeTranning TO public
+GRANT ALL ON EmployeeTraining TO public
 /
 
