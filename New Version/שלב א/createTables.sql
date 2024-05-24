@@ -86,7 +86,7 @@ CONSTRAINT fk_EmployeeShift2 FOREIGN KEY (StartTime)
     REFERENCES Shift (StartTime))
 /
 
-CREATE TABLE EmployeeTranning (
+CREATE TABLE EmployeeTraining (
     TrainedId      NUMBER(9) NOT NULL,
     TrainingId     NUMBER(5) NOT NULL,
 CONSTRAINT pk_EmployeeTranning PRIMARY KEY (TrainedId,TrainingId),

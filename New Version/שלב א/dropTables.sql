@@ -1,3 +1,4 @@
+Drop Table EmployeeTraining;
 Drop Table Manager;
 Drop Table LeaveRequest;
 Drop Table EmployeeShift;
