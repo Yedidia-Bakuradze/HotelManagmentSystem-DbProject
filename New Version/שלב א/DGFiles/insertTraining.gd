@@ -4,7 +4,7 @@ Version=1
 
 [Preferences]
 Username=
-Password=2587
+Password=2177
 Database=
 DateFormat=
 CommitCount=0
@@ -30,7 +30,7 @@ Master=
 Name=TRAININGID
 Type=NUMBER
 Size=9
-Data=Sequence(0, 1,10000)
+Data=Sequence(101, 1,10000)
 Master=
 
 [Record]
@@ -59,21 +59,6 @@ Data=List(
 =
 =select id
 =from manager
-=
-=)
-Master=
-
-[Record]
-Name=TRAINEDID
-Type=NUMBER
-Size=9
-Data=List(
-=select id
-=from employee
-=where id not in (
-=    select id
-=    from manager
-=)
 =
 =)
 Master=

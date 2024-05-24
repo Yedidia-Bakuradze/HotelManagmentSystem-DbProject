@@ -56,11 +56,9 @@ CREATE TABLE Training (
     TrainingId     NUMBER(9) NOT NULL,
     TrainingName   VARCHAR2(35) NOT NULL,
     TrainerId      NUMBER(9),
-    TrainedId      NUMBER(9),
+    Unique(TrainingName,TrainerId,TrainingId),
 CONSTRAINT pk_Tranning PRIMARY KEY (TrainingId),
 CONSTRAINT fk_Tranning FOREIGN KEY (TrainerId)
-    REFERENCES Employee (Id),
-CONSTRAINT fk_Tranning2 FOREIGN KEY (TrainedId)
     REFERENCES Employee (Id))
 /
 
@@ -88,6 +86,17 @@ CONSTRAINT fk_EmployeeShift2 FOREIGN KEY (StartTime)
     REFERENCES Shift (StartTime))
 /
 
+CREATE TABLE EmployeeTranning (
+    TrainedId      NUMBER(9) NOT NULL,
+    TrainingId     NUMBER(5) NOT NULL,
+CONSTRAINT pk_EmployeeTranning PRIMARY KEY (TrainedId,TrainingId),
+CONSTRAINT fk_EmployeeTranning FOREIGN KEY (TrainedId)
+    REFERENCES Employee (Id)
+    ON DELETE CASCADE,
+CONSTRAINT fk_EmployeeTranning2 FOREIGN KEY (TrainingId)
+    REFERENCES Training (TrainingId))
+/
+
 
 GRANT ALL ON Shift TO public
 /
@@ -105,5 +114,6 @@ GRANT ALL ON LeaveRequest TO public
 /
 GRANT ALL ON EmployeeShift TO public
 /
-
+GRANT ALL ON EmployeeTranning TO public
+/
 
