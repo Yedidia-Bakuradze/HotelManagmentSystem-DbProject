@@ -68,7 +68,7 @@ CREATE TABLE LeaveRequest (
     LeaveType      VARCHAR2(35) NOT NULL,
     RequestId      NUMBER(5) NOT NULL,
     Status         VARCHAR2(35) NOT NULL,
-    EmpId          NUMBER(9), NOT NULL
+    EmpId          NUMBER(9), 
 CONSTRAINT pk_LeaveRequest PRIMARY KEY (RequestId),
 CONSTRAINT fk_LeaveRequest FOREIGN KEY (EmpId)
     REFERENCES Employee (Id),
