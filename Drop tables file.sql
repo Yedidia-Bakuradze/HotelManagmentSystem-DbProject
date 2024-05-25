@@ -1,9 +1,0 @@
-DROP TABLE EmployeeTranning;
-DROP TABLE EmployeeShift;
-DROP TABLE LeaveRequest;
-DROP TABLE Training;
-DROP TABLE Manager;
-DROP TABLE Employee;
-DROP TABLE Position;
-DROP TABLE Department;
-DROP TABLE Shift;
