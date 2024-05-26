@@ -1,0 +1,9 @@
+delete EmployeeTraining;
+delete Manager;
+delete LeaveRequest;
+delete EmployeeShift;
+delete Shift;
+delete Training;
+delete Employee;
+delete Position;
+delete Department;
