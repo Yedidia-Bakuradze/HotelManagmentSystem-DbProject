@@ -1,7 +1,378 @@
 ﻿prompt PL/SQL Developer Export Tables for user C##YEDIDIA@XE
-prompt Created by yedid on Saturday, 25 May 2024
+prompt Created by yedid on Wednesday, 29 May 2024
 set feedback off
 set define off
+
+prompt Creating DEPARTMENT...
+create table DEPARTMENT
+(
+  departid   NUMBER(5) not null,
+  departname VARCHAR2(35) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table DEPARTMENT
+  add constraint PK_DEPARTMENT primary key (DEPARTID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+grant select, insert, update, delete, references, alter, index, debug, read on DEPARTMENT to PUBLIC;
+
+prompt Creating POSITION...
+create table POSITION
+(
+  posid    NUMBER(9) not null,
+  departid NUMBER(5) not null,
+  salary   NUMBER(5,2) not null,
+  role     VARCHAR2(30) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table POSITION
+  add constraint PK_POSITION primary key (POSID, DEPARTID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table POSITION
+  add constraint FK_POSITION foreign key (DEPARTID)
+  references DEPARTMENT (DEPARTID) on delete cascade;
+grant select, insert, update, delete, references, alter, index, debug, read on POSITION to PUBLIC;
+
+prompt Creating EMPLOYEE...
+create table EMPLOYEE
+(
+  id        NUMBER(9) not null,
+  city      VARCHAR2(35) not null,
+  address   VARCHAR2(35) not null,
+  phone     VARCHAR2(35) not null,
+  email     VARCHAR2(45) not null,
+  firstname VARCHAR2(35) not null,
+  lastname  VARCHAR2(35) not null,
+  gender    VARCHAR2(35) not null,
+  joindate  DATE not null,
+  posid     NUMBER(9) not null,
+  departid  NUMBER(5) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEE
+  add constraint PK_EMPLOYEE primary key (ID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEE
+  add constraint FK_EMPLOYEE foreign key (POSID, DEPARTID)
+  references POSITION (POSID, DEPARTID) on delete cascade;
+grant select, insert, update, delete, references, alter, index, debug, read on EMPLOYEE to PUBLIC;
+
+prompt Creating SHIFT...
+create table SHIFT
+(
+  starttime    TIMESTAMP(6) not null,
+  endtime      TIMESTAMP(6) not null,
+  specialshift VARCHAR2(35)
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table SHIFT
+  add constraint PK_SHIFT primary key (STARTTIME)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table SHIFT
+  add constraint CHECK_TIME
+  check (StartTime < EndTime);
+grant select, insert, update, delete, references, alter, index, debug, read on SHIFT to PUBLIC;
+
+prompt Creating EMPLOYEESHIFT...
+create table EMPLOYEESHIFT
+(
+  empid     NUMBER(9) not null,
+  starttime TIMESTAMP(6) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEESHIFT
+  add constraint PK_EMPLOYEESHIFT primary key (EMPID, STARTTIME)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEESHIFT
+  add constraint FK_EMPLOYEESHIFT foreign key (EMPID)
+  references EMPLOYEE (ID) on delete cascade;
+alter table EMPLOYEESHIFT
+  add constraint FK_EMPLOYEESHIFT2 foreign key (STARTTIME)
+  references SHIFT (STARTTIME);
+grant select, insert, update, delete, references, alter, index, debug, read on EMPLOYEESHIFT to PUBLIC;
+
+prompt Creating TRAINING...
+create table TRAINING
+(
+  entreylevel  VARCHAR2(35) not null,
+  trainingid   NUMBER(9) not null,
+  trainingname VARCHAR2(35) not null,
+  trainerid    NUMBER(9)
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table TRAINING
+  add constraint PK_TRANNING primary key (TRAININGID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table TRAINING
+  add unique (TRAININGNAME, TRAINERID, TRAININGID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table TRAINING
+  add constraint FK_TRANNING foreign key (TRAINERID)
+  references EMPLOYEE (ID);
+grant select, insert, update, delete, references, alter, index, debug, read on TRAINING to PUBLIC;
+
+prompt Creating EMPLOYEETRAINING...
+create table EMPLOYEETRAINING
+(
+  trainedid  NUMBER(9) not null,
+  trainingid NUMBER(5) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEETRAINING
+  add constraint PK_EMPLOYEETRANNING primary key (TRAINEDID, TRAININGID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table EMPLOYEETRAINING
+  add constraint FK_EMPLOYEETRANNING foreign key (TRAINEDID)
+  references EMPLOYEE (ID) on delete cascade;
+alter table EMPLOYEETRAINING
+  add constraint FK_EMPLOYEETRANNING2 foreign key (TRAININGID)
+  references TRAINING (TRAININGID);
+grant select, insert, update, delete, references, alter, index, debug, read on EMPLOYEETRAINING to PUBLIC;
+
+prompt Creating LEAVEREQUEST...
+create table LEAVEREQUEST
+(
+  startdate DATE not null,
+  enddate   DATE not null,
+  leavetype VARCHAR2(35) not null,
+  requestid NUMBER(5) not null,
+  status    VARCHAR2(35) not null,
+  empid     NUMBER(9) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table LEAVEREQUEST
+  add constraint PK_LEAVEREQUEST primary key (REQUESTID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table LEAVEREQUEST
+  add constraint FK_LEAVEREQUEST foreign key (EMPID)
+  references EMPLOYEE (ID);
+alter table LEAVEREQUEST
+  add constraint CHECK_DATES
+  check (StartDate < EndDate);
+grant select, insert, update, delete, references, alter, index, debug, read on LEAVEREQUEST to PUBLIC;
+
+prompt Creating MANAGER...
+create table MANAGER
+(
+  id         NUMBER(9) not null,
+  accesstype VARCHAR2(1) not null
+)
+tablespace SYSTEM
+  pctfree 10
+  pctused 40
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table MANAGER
+  add constraint PK_MANAGER primary key (ID)
+  using index 
+  tablespace SYSTEM
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table MANAGER
+  add constraint FK_MANAGER2 foreign key (ID)
+  references EMPLOYEE (ID);
+grant select, insert, update, delete, references, alter, index, debug, read on MANAGER to PUBLIC;
 
 prompt Disabling triggers for DEPARTMENT...
 alter table DEPARTMENT disable all triggers;
