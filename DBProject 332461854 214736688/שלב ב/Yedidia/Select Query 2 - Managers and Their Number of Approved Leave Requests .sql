@@ -1,6 +1,15 @@
 
-Select Id, DEPARTID, D2.DEPARTNAME, FirstName, LastName, LeaveRequestPerDepartment
+Select Id,
+FirstName as Manager_FirstName,
+LastName as Manager_LastName,
+Phone as Manager_PhoneNumber,
+Email as Manger_EmailAddress,
+DEPARTID, 
+D2.DEPARTNAME,
+LeaveRequestPerDepartment
+
 From Manager M
+
 Natural Join Employee E
 Natural Join Position P
 Natural Join(
@@ -10,8 +19,6 @@ Natural Join(
   Join Position P On E.PosId = P.PosId
   Join Department D On P.DepartId = D.DEPARTID
 
-
-  Where Status = 'Approved'
   Group By D.DepartId
 )
 Natural Join Department D2;

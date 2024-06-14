@@ -1,5 +1,6 @@
 Select ME.ID, FirstName,LastName,Email,
-RegularSalary, NightShiftSalary, ShabbatShiftSalary, NightShabbatShiftSalary
+RegularSalary, NightShiftSalary, ShabbatShiftSalary, NightShabbatShiftSalary,
+(COALESCE(RegularSalary,0) + COALESCE(NightShiftSalary, 0) + COALESCE(ShabbatShiftSalary, 0) + COALESCE(NightShabbatShiftSalary, 0) ) as Total_Payment
 
 From Employee ME,
 (
@@ -69,7 +70,7 @@ From Employee ME,
 
         Where E1.id = ES1.Empid
         And ES1.Starttime = S.STARTTIME
-        And SpecialShift = 'Shabbes'
+        And SpecialShift = 'Night Shabbes'
         And P.Posid = E1.PosId
         And ES1.StartTime Between TO_DATE('01-01-2024','DD-MM-YYYY') and TO_DATE('01-02-2024','DD-MM-YYYY')
         
