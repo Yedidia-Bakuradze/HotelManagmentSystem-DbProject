@@ -5,10 +5,7 @@ RETURN NUMBER IS
     CURSOR c_employee IS
         SELECT e.Id
         FROM Employee e
-        JOIN EmployeeTraining et ON e.Id = et.TrainedId
-        JOIN Training t ON et.TrainingId = t.TrainingId
-        WHERE t.TrainingName = 'Shift Specific Training' -- Example training name
-        AND NOT EXISTS (
+        WHERE NOT EXISTS(
             SELECT 1 
             FROM EmployeeShift es 
             WHERE es.EmpId = e.Id 
@@ -38,6 +35,6 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20001, 'No suitable employee found for the shift.');
 EXCEPTION
     WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20002, SQLERRM);
+        RAISE_APPLICATION_ERROR(-20002, 'Error in get_employee_for_shift: ' || SQLERRM);
 END get_employee_for_shift;
 /

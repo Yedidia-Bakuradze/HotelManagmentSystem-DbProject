@@ -5,16 +5,13 @@ RETURN NUMBER IS
     CURSOR c_employee IS
         SELECT e.Id
         FROM Employee e
-        JOIN employeetraining et ON e.Id = et.trainedid
-        JOIN Training t ON et.TrainingId = t.TrainingId
-        WHERE t.TrainingName = 'Succession Planning Seminar' -- Example training name
-        AND NOT EXISTS (
+        WHERE NOT EXISTS (
             SELECT 1 
-            FROM employeeshift ws 
-            WHERE ws.empId = e.Id 
-            AND ws.Starttime = shift_start_time
+            FROM EmployeeShift es 
+            WHERE es.EmpId = e.Id 
+            AND es.StartTime = shift_start_time
         );
---     ref_cur SYSREFCURSOR;
+    ref_cur SYS_REFCURSOR;
 BEGIN
     OPEN c_employee;
     LOOP
@@ -24,8 +21,8 @@ BEGIN
         -- Count shifts assigned to the employee
         OPEN ref_cur FOR
             SELECT COUNT(*) 
-            FROM employeeshift 
-            WHERE empId = employee_id;
+            FROM EmployeeShift 
+            WHERE EmpId = employee_id;
         FETCH ref_cur INTO least_shifts;
         CLOSE ref_cur;
 
@@ -40,6 +37,4 @@ EXCEPTION
     WHEN OTHERS THEN
         RAISE_APPLICATION_ERROR(-20002, SQLERRM);
 END get_employee_for_shift;
-
--- 
 /
