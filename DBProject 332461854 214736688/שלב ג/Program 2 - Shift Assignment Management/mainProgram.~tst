@@ -1,15 +1,12 @@
 PL/SQL Developer Test script 3.0
-19
+16
 DECLARE
-    v_shift_start_time TIMESTAMP;
+    v_shift_start_time TIMESTAMP := TO_TIMESTAMP('2023-06-01 09:00:00', 'YYYY-MM-DD HH24:MI:SS');
     v_employee_id NUMBER;
 BEGIN
-    -- Call the procedure to assign shifts for the next 7 days
-    assign_shifts(TO_DATE('03-JUN-24', 'DD-MON-YY'), TO_DATE('13-JUN-24', 'DD-MON-YY'));
+    -- Call the procedure
+    assign_shifts(TO_DATE('10-MAY-23', 'DD-MON-YY'), TO_DATE('13-MAY-23', 'DD-MON-YY'));
 
-    -- Example shift start time for which we want to find an employee
-    v_shift_start_time := TO_TIMESTAMP('2024-07-01 09:00:00', 'YYYY-MM-DD HH24:MI:SS');
-    
     -- Call the function to get an employee for a specific shift
     v_employee_id := get_employee_for_shift(v_shift_start_time);
     
