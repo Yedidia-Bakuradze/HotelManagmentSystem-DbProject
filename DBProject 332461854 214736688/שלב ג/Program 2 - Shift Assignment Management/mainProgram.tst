@@ -5,7 +5,7 @@ DECLARE
     v_employee_id NUMBER;
 BEGIN
     -- Call the procedure
-    assign_shifts(TO_DATE('10-MAY-23', 'DD-MON-YY'), TO_DATE('13-MAY-23', 'DD-MON-YY'));
+    create_and_assign_shifts(TO_DATE('10-MAY-23', 'DD-MON-YY'), TO_DATE('13-MAY-23', 'DD-MON-YY'));
 
     -- Call the function to get an employee for a specific shift
     v_employee_id := get_employee_for_shift(v_shift_start_time);
