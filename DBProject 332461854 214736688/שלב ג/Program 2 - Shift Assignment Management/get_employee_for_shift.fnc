@@ -1,14 +1,11 @@
-CREATE OR REPLACE FUNCTION get_employee_for_shift(shift_start_time TIMESTAMP)
+CREATE OR REPLACE FUNCTION get_employee_for_shift(shift_start_time date)
 RETURN NUMBER IS
     employee_id NUMBER;
-    least_shifts NUMBER := 9999;
+    least_shifts NUMBER := 20;
     CURSOR c_employee IS
         SELECT e.Id
         FROM Employee e
-        JOIN EmployeeTraining et ON e.Id = et.TrainedId
-        JOIN Training t ON et.TrainingId = t.TrainingId
-        WHERE t.TrainingName = 'Shift Specific Training' -- Example training name
-        AND NOT EXISTS (
+        WHERE NOT EXISTS(
             SELECT 1 
             FROM EmployeeShift es 
             WHERE es.EmpId = e.Id 
@@ -21,7 +18,7 @@ BEGIN
         FETCH c_employee INTO employee_id;
         EXIT WHEN c_employee%NOTFOUND;
 
-        -- Count shifts assigned to the employee
+        
         OPEN ref_cur FOR
             SELECT COUNT(*) 
             FROM EmployeeShift 
@@ -29,7 +26,7 @@ BEGIN
         FETCH ref_cur INTO least_shifts;
         CLOSE ref_cur;
 
-        IF least_shifts < 5 THEN -- Threshold for least number of shifts
+        IF least_shifts < 5 THEN 
             RETURN employee_id;
         END IF;
     END LOOP;
@@ -38,6 +35,6 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20001, 'No suitable employee found for the shift.');
 EXCEPTION
     WHEN OTHERS THEN
-        RAISE_APPLICATION_ERROR(-20002, SQLERRM);
-END get_employee_for_shift;
+        RAISE_APPLICATION_ERROR(-20002, 'Error in get_employee_for_shift: ' || SQLERRM);
+END;
 /
