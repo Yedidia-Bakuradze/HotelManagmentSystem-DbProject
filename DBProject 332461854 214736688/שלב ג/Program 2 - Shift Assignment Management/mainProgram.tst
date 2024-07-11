@@ -1,7 +1,7 @@
 PL/SQL Developer Test script 3.0
 19
 DECLARE
-    v_start_date DATE := TO_DATE('20-JUNE-2026', 'DD-MON-YYYY');
+    v_start_date DATE := TO_DATE('29-MAY-2024', 'DD-MON-YYYY');
     v_num_shifts NUMBER := 10;
 BEGIN
     create_and_assign_shifts(v_num_shifts, v_start_date);
@@ -16,7 +16,7 @@ BEGIN
     
 EXCEPTION
     WHEN OTHERS THEN
-       DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+       DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM); 
 END;
 /
 0
