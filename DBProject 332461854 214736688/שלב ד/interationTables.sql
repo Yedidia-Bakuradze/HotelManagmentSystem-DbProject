@@ -1,19 +1,3 @@
--- Rename the original tables to a different name
-
-rename Department to Department_1;
-rename Employee to Employee_1;
-rename EmployeeShift to EmployeeShift_1;
-rename EmployeeTraining to EmployeeTraining_1;
-rename LeaveRequest to LeaveRequest_1;
-rename Manager to Manager_1;
-rename Position to Position_1;
-rename Shift to Shift_1;
-rename Training to Training_1;
-
-
-
-
-
 prompt PL/SQL Developer Export Tables for user C##Yedidia
 prompt Created by admin on יום חמישי 11 יולי 2024
 set feedback off
