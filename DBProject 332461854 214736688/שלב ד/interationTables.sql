@@ -1,4 +1,4 @@
-prompt PL/SQL Developer Export Tables for user C##Yedidia
+  prompt PL/SQL Developer Export Tables for user C##Yedidia
 prompt Created by admin on יום חמישי 11 יולי 2024
 set feedback off
 set define off
